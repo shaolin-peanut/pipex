@@ -3,8 +3,8 @@
 # Explanation
 This program is a great initiation to the concept of pipes, and redirection of pipes, in Unix.
 In this program, we're gonna imitate the pipe operator (`|`), which allows to "pipe" the output of a program to another one.
-But beyond that, we have to take a file as input, and write the output of the last command, to another file. This seems tricky but the logic is quite simple when you get the moving parts.
-To understand how this all works, we'll start by looking at processes.
+But beyond that, we have to take a file as input, and write the output of the last command, to another file.
+Seems tricky, but simple when you get the moving parts
 ## [Processes](https://en.wikipedia.org/wiki/Process_(computing)) in computing
 As the wikipedia page (linked above) explains in detail, a process is an instance, a "happening", of your program when it executes. You can see it as an event, but formalized. 
 In this formalized event, this **process**, you get the memory space where variables are stored for the duration of time the program is executing, and the connection to the system you run on, through [standard streams](https://en.wikipedia.org/wiki/Standard_streams) (STDIN, STDOUT) for example.
