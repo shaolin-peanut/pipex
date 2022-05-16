@@ -1,7 +1,7 @@
 # pipex
 A Unix pipe redirection program, part of 42's common core
 
-# Explanation
-This program is a great initiation to the concept of pipes, and redirection of pipes, in Unix.
-Pipes are an essential building block of the shell. It's one of the easiest tools for programs to communicate with one another.
-To understand this, we'll start by looking at processes.
+# Illustrated tutorial
+I took some time explaining what I learned while doing this project, to make sure I understand the notions I'm supposed to get by doing it.
+I recommend taking a look. Made some nice illustrations and shared links.
+[Read it here](documentation/tutorial.md)
