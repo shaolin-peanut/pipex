@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "get_next_line.h"
 
 int	ft_strlen(char *str)
 {
@@ -53,16 +52,4 @@ char	*ft_strchr(char *string, char c)
 		a++;
 	}
 	return ((char *)(string + a));
-}
-
-t_list	*ft_lstnew(void	*content)
-{
-	t_list	*new;
-
-	new = malloc(1 * sizeof(t_list));
-	if (new == NULL)
-		return (NULL);
-	new->content = content;
-	new->next = (NULL);
-	return (new);
 }

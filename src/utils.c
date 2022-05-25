@@ -9,14 +9,12 @@
 /*   Updated: 2022/05/06 13:42:44 by sbars            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-// FUNCTION COUNT: 3
-//
 #include "pipex.h"
 
 char	*find_path(char	*cmd_name, t_data	*pkg)
 {
-	int	i;
-	int	ret;
+	int		i;
+	int		ret;
 	char	*temp_path;
 	char	*temp_path2;
 
@@ -30,7 +28,8 @@ char	*find_path(char	*cmd_name, t_data	*pkg)
 		temp_path2 = ft_strjoin(temp_path, cmd_name);
 		free(temp_path);
 		temp_path = NULL;
-		if ((ret = access(temp_path2, X_OK)) == 0)
+		ret = access(temp_path2, X_OK);
+		if (ret == 0)
 			return (temp_path2);
 		free(temp_path2);
 		temp_path2 = NULL;
@@ -52,18 +51,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i2 = ft_strlen((char *) s2);
 		i = -1;
 		concatenated = malloc(sizeof(*concatenated) * i2 + i1 + 1);
-		if (concatenated)
-		{
-			while (++i < i1)
-				concatenated[i] = s1[i];
-			i = -1;
-			while (++i < i2)
-				concatenated[i + i1] = s2[i];
-			concatenated[i + i1] = '\0';
-			return (concatenated);
-		}
-		else
+		if (concatenated == NULL)
 			errormsg("malloc error");
+		while (++i < i1)
+			concatenated[i] = s1[i];
+		i = -1;
+		while (++i < i2)
+			concatenated[i + i1] = s2[i];
+		concatenated[i + i1] = '\0';
 	}
 	else
 		return (0);

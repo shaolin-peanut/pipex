@@ -1,10 +1,8 @@
 SRC = ${addprefix src/, main.c	\
-	  check.c	\
 	  utils.c	\
 	  errormsg.c	\
 	  process.c	\
 	  parse_ops.c	\
-	  get_next_line.c	\
 	  get_next_line_utils.c	\
 	  ft_split.c}
 OBJ = ${SRC:.c=.o}

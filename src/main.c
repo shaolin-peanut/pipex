@@ -17,12 +17,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*pkg;
 
 	if (argc < 5)
-	{
-		errormsg("enter more arguments");
-		return (0); // print help page in this case
-	}
+		errormsg("Usage:\n./pipex infile \"cmd1 arg1\" \"cmd2 arg1\" outfile\"");
 	pkg = parsing(argv, argc, envp);
 	pipex(pkg);
 	return (0);
 }
-
