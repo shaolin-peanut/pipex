@@ -1,67 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbars <marvin@42lausanne.ch>               +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/03 15:12:30 by sbars             #+#    #+#             */
+/*   Updated: 2021/11/03 15:12:33 by sbars            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
-char	*pp_strcpy(char *str, int s, int e, t_data  *pkg)
+int	ft_isalnum(int c)
 {
-	int		lenght;
-	char	*r;
-
-	lenght = e - s + 1; // start + end + 1. Quesaqo?
-	r = (char *)malloc(lenght * sizeof(char) /*+ 1*/);
-	if (!r)
-		errormsg("malloc error in ft_split.c:pp_strcpy():11", pkg);
-	r[lenght] = 0;
-	while (lenght--)
-		r[lenght] = str[s + lenght];
-	return (r);
+	if ((((c > 64) & (c < 91)) || ((c > 96) & (c < 123)))
+		|| ((c > 47) & (c < 58)))
+		return (1);
+	return (0);
 }
 
-static int	line_counter(char *str, char c)
+int	count_strings(char const *s2, char sep)
 {
-	int	r;
+	int	count;
+	int	i;
 
-	r = 1;
-	if (*str == c)
-		r = 0;
-	while (*str)
-	{
-		if (*str == c)
-		{
-			r++;
-			while (str[1] == c)
-				str++;
-		}
-		str++;
-	}
-	if (*(--str) == c)
-		r--;
-	return (r);
-}
-
-char	**ft_split(char *str, char c, t_data    *pkg)
-{
-	char	**r;
-	int		line;
-	int		start;
-	int		end;
-	int		i;
-
-	line = line_counter(str, c); // compte le nombre d'elements a decouper pour malloquer
-	r = (char **)malloc(sizeof(char *) * line + 1);
-	if (!r)
-		return (0);
-	r[line] = 0;// met un null a la fin de l'array er avance
-	end = 0;
+	count = 1;
 	i = 0;
-	while (line--)
+	while (s2[i])
 	{
-		while (str[end] == c) // iter sur le separateur s'il se trouve au debut
-			end ++;
-		start = end;
-		while (str[end] != 0 && str[end] != c) // tant que string est pas fini, et str[i] n'est pas le separateur, itere
-			end ++;
-		r[i] = pp_strcpy(str, start, end - 1, pkg); // quand sep trouver ou fin de string, copy la portion de la string qu'il faut copier dans l'array. Debut et fin sont compter
-		if (!r[i++]) // error checking
-			return (0);
+		if (s2[i] == sep && (ft_isalnum(s2[i + 1])))
+			count++;
+		i++;
 	}
-	return (r);
+	return (count);
+}
+
+int	ft_substrlen(char const *s3, char sep, int start)
+{
+	int	count;
+
+	count = 0;
+	while (s3[start])
+	{
+		if ((start == 0 && s3[start] != sep)
+			|| (s3[start] != sep && s3[start - 1] == sep))
+		{
+			while (s3[start] && s3[start++] != sep)
+				count++;
+			return (count);
+		}
+		++start;
+	}
+	return (count);
+}
+
+char	**ft_split(char *s1, char c, t_data	*pkg)
+{
+	char	**tab;
+	int		i;
+	int		tabs;
+
+	(void) pkg;
+	i = -1;
+	tabs = -1;
+	if (s1 == NULL)
+		return (NULL);
+	tab = malloc((count_strings(s1, c)) * sizeof(char *));
+	if (tab)
+	{
+		while (s1[++i])
+		{
+			if ((i == 0 && s1[i] != c) || (s1[i] != c && s1[i - 1] == c))
+			{
+				tab[++tabs] = malloc(sizeof(char) * ft_substrlen(s1, c, i) + 1);
+				if (tab[tabs])
+					ft_strlcpy(tab[tabs], (s1 + i), ft_substrlen(s1, c, i) + 1);
+			}
+		}
+		tab[++tabs] = NULL;
+	}
+	else
+		return (NULL);
+	return (tab);
 }
