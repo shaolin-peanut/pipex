@@ -9,8 +9,9 @@ OBJ = ${SRC:.c=.o}
 HEAD = src/pipex.h
 NAME = pipex
 CFLAGS = -Wall -Werror -Wextra 
-OFLAGS = -fsanitize=address -g3
+OFLAGS = -g3
 CC = gcc
+# -fsanitize=address 
 
 all:	${NAME}
 

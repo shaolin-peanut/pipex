@@ -12,7 +12,7 @@
 
 #include	"pipex.h"
 
-void	errormsg(char *str)
+void	errormsg(char *str, t_data  *pkg)
 {
 	if (str == 0)
 		return ;
@@ -22,5 +22,19 @@ void	errormsg(char *str)
 		str++;
 	}
 	write(2, "\n", 1);
+	close(pkg->infd);
+	close(pkg->outfd);
+	free(pkg->paths);
+	if (pkg->cmd1 != NULL)
+	{
+		free(pkg->cmd1->argv);
+		free(pkg->cmd1);
+	}
+	if (pkg->cmd2 != NULL)
+	{
+		free(pkg->cmd2->argv);
+		free(pkg->cmd2);
+	}
+	free(pkg);
 	exit(EXIT_FAILURE);
 }

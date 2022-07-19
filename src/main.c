@@ -17,7 +17,10 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*pkg;
 
 	if (argc < 5)
-		errormsg("Usage:\n./pipex infile \"cmd1 arg1\" \"cmd2 arg1\" outfile\"");
+    {
+		write(1 ,"Usage:\n./pipex infile \"cmd1 arg1\" \"cmd2 arg1\" outfile\"", 55);
+        exit(EXIT_FAILURE);
+    }
 	pkg = parsing(argv, argc, envp);
 	pipex(pkg);
 	return (0);

@@ -17,11 +17,15 @@ t_data	*argv_parse(t_data *pkg, char **args, int argc)
 	pkg->infd = open(args[1], O_RDONLY);
 	pkg->outfd = open(args[argc - 1], O_RDWR);
 	if (pkg->infd == -1)
-		errormsg("infile open error");
+		errormsg("infile open error", pkg);
 	else if (pkg->outfd == -1)
-		errormsg("outfile open error");
-	pkg->cmd1 = init_cmd(ft_split(args[2], ' '), pkg);
-	pkg->cmd2 = init_cmd(ft_split(args[3], ' '), pkg);
+		errormsg("outfile open error", pkg);
+	pkg->cmd1 = init_cmd(ft_split(args[2], ' ', pkg), pkg);
+	pkg->cmd2 = init_cmd(ft_split(args[3], ' ', pkg), pkg);
+    if (!pkg->cmd1 || !pkg->cmd2)
+    {
+        errormsg("Error ->", pkg);
+    }
 	return (pkg);
 }
 
@@ -31,11 +35,13 @@ t_cmd	*init_cmd(char **args, t_data	*pkg)
 
 	cmd = (t_cmd *)malloc(1 * sizeof(cmd));
 	if (!cmd)
-		errormsg("cmd malloc error, parse_ops.c:68");
+		errormsg("cmd malloc error, parse_ops.c:68", pkg);
 	cmd->path = find_path(args[0], pkg);
 	cmd->argv = (char **)malloc(1 * sizeof(args));
 	if (!cmd->argv)
-		errormsg("pkg->argv malloc error");
+    {
+		errormsg("pkg->argv malloc error", pkg);
+    }
 	cmd->argv = args;
 	return (cmd);
 }
@@ -53,15 +59,24 @@ t_data	*parsing(char **args, int argc, char **envp)
 
 // Find cmd path in child process, by testing every cmd+path with 
 // exec (if error, retry with other path, if all paths tried, return error).
-char	**paths_finder(char	**env)
+char	**paths_finder(char	**env, t_data   *pkg)
 {
 	int	i;
+	char	**tmp;
+	char	**tm2;
 
 	i = -1;
+	tmp = 0;
+	tm2 = 0;
 	while (env[++i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			return (ft_split(*(ft_split(env[i], '=') + 1), ':'));
+		{
+			tmp = ft_split(env[i], '=', pkg);
+			tm2 = ft_split(tmp[1], ':', pkg);
+			free(tmp);
+			return (tm2);
+		}
 	}
 	return (NULL);
 }
@@ -70,17 +85,17 @@ t_data	*init_data(t_data *pkg, char **envp)
 {
 	pkg = (t_data *)malloc(1 * sizeof(t_data));
 	if (!pkg)
-		errormsg("pkg malloc error");
+		errormsg("pkg malloc error", pkg);
 	pkg->cmd1 = 0;
 	pkg->cmd2 = 0;
 	pkg->envp = 0;
-	pkg->envp = envp;
 	pkg->paths = 0;
-	pkg->paths = paths_finder(envp);
 	pkg->pid = 0;
 	pkg->fd[0] = 0;
 	pkg->fd[1] = 0;
 	pkg->outfd = 0;
 	pkg->infd = 0;
+	pkg->envp = envp;
+	pkg->paths = paths_finder(envp, pkg);
 	return (pkg);
 }

@@ -28,7 +28,7 @@ void	pipex(t_data	*pkg)
 {
 	dup2(pkg->infd, STDIN_FILENO);
 	if (pipe(pkg->fd) == -1)
-		errormsg("pipe error");
+		errormsg("pipe error", pkg);
 	pkg->pid = fork();
 	if (pkg->pid > 0)
 		parent_process(pkg);
@@ -38,9 +38,9 @@ void	pipex(t_data	*pkg)
 		dup2(pkg->fd[1], STDOUT_FILENO);
 		close(pkg->fd[1]);
 		execve(pkg->cmd1->path, pkg->cmd1->argv, pkg->envp);
-		errormsg("Exec failure");
+		errormsg("Exec failure", pkg);
 	}
 	dup2(pkg->outfd, STDOUT_FILENO);
 	execve(pkg->cmd2->path, pkg->cmd2->argv, pkg->envp);
-	errormsg("Exec failure");
+	errormsg("Exec failure", pkg);
 }

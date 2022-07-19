@@ -1,14 +1,14 @@
 #include "pipex.h"
 
-char	*pp_strcpy(char *str, int s, int e)
+char	*pp_strcpy(char *str, int s, int e, t_data  *pkg)
 {
 	int		lenght;
 	char	*r;
 
 	lenght = e - s + 1; // start + end + 1. Quesaqo?
-	r = (char *)malloc(lenght * sizeof(char) + 1);
+	r = (char *)malloc(lenght * sizeof(char) /*+ 1*/);
 	if (!r)
-		errormsg("malloc error in ft_split.c:pp_strcpy():11");
+		errormsg("malloc error in ft_split.c:pp_strcpy():11", pkg);
 	r[lenght] = 0;
 	while (lenght--)
 		r[lenght] = str[s + lenght];
@@ -37,7 +37,7 @@ static int	line_counter(char *str, char c)
 	return (r);
 }
 
-char	**ft_split(char *str, char c)
+char	**ft_split(char *str, char c, t_data    *pkg)
 {
 	char	**r;
 	int		line;
@@ -49,7 +49,7 @@ char	**ft_split(char *str, char c)
 	r = (char **)malloc(sizeof(char *) * line + 1);
 	if (!r)
 		return (0);
-	r[line] = 0;// met un null a la fin de l'array en avance
+	r[line] = 0;// met un null a la fin de l'array er avance
 	end = 0;
 	i = 0;
 	while (line--)
@@ -59,7 +59,7 @@ char	**ft_split(char *str, char c)
 		start = end;
 		while (str[end] != 0 && str[end] != c) // tant que string est pas fini, et str[i] n'est pas le separateur, itere
 			end ++;
-		r[i] = pp_strcpy(str, start, end - 1); // quand sep trouver ou fin de string, copy la portion de la string qu'il faut copier dans l'array. Debut et fin sont compter
+		r[i] = pp_strcpy(str, start, end - 1, pkg); // quand sep trouver ou fin de string, copy la portion de la string qu'il faut copier dans l'array. Debut et fin sont compter
 		if (!r[i++]) // error checking
 			return (0);
 	}

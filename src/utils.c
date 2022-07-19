@@ -34,7 +34,7 @@ char	*find_path(char	*cmd_name, t_data	*pkg)
 		free(temp_path2);
 		temp_path2 = NULL;
 	}	
-	errormsg("Command not found");
+	errormsg("Command not found", pkg);
 	return ("not found");
 }
 
@@ -52,7 +52,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i = -1;
 		concatenated = malloc(sizeof(*concatenated) * i2 + i1 + 1);
 		if (concatenated == NULL)
-			errormsg("malloc error");
+        {
+			write(1, "malloc error", 12);
+        }
 		while (++i < i1)
 			concatenated[i] = s1[i];
 		i = -1;
