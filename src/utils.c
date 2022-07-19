@@ -52,9 +52,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i = -1;
 		concatenated = malloc(sizeof(*concatenated) * i2 + i1 + 1);
 		if (concatenated == NULL)
-        {
+		{
 			write(1, "malloc error", 12);
-        }
+		}
 		while (++i < i1)
 			concatenated[i] = s1[i];
 		i = -1;

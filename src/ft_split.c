@@ -55,13 +55,12 @@ int	ft_substrlen(char const *s3, char sep, int start)
 	return (count);
 }
 
-char	**ft_split(char *s1, char c, t_data	*pkg)
+char	**ft_split(char *s1, char c)
 {
 	char	**tab;
 	int		i;
 	int		tabs;
 
-	(void) pkg;
 	i = -1;
 	tabs = -1;
 	if (s1 == NULL)

@@ -12,7 +12,7 @@
 
 #include	"pipex.h"
 
-void	errormsg(char *str, t_data  *pkg)
+void	errormsg(char *str, t_data *pkg)
 {
 	if (str == 0)
 		return ;

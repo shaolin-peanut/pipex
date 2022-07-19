@@ -50,14 +50,14 @@ t_cmd	*init_cmd(char	**args, t_data	*pkg);
 void	child_launchpad(t_data *pkg);
 void	parent_launchpad(t_data	*pkg, int info);
 // errormsg.c
-void	errormsg(char *str, t_data  *pkg);
+void	errormsg(char *str, t_data *pkg);
 // utils.c
 char	*find_path(char	*cmd_name, t_data	*pkg);
 
 // FOREIGNERS
 char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
-char	**ft_split(char *s1, char c, t_data *pkg);
+char	**ft_split(char *s1, char c);
 int		ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int		ft_strlen(char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

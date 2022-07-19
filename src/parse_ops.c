@@ -20,12 +20,12 @@ t_data	*argv_parse(t_data *pkg, char **args, int argc)
 		errormsg("infile open error", pkg);
 	else if (pkg->outfd == -1)
 		errormsg("outfile open error", pkg);
-	pkg->cmd1 = init_cmd(ft_split(args[2], ' ', pkg), pkg);
-	pkg->cmd2 = init_cmd(ft_split(args[3], ' ', pkg), pkg);
-    if (!pkg->cmd1 || !pkg->cmd2)
-    {
-        errormsg("Error ->", pkg);
-    }
+	pkg->cmd1 = init_cmd(ft_split(args[2], ' '), pkg);
+	pkg->cmd2 = init_cmd(ft_split(args[3], ' '), pkg);
+	if (!pkg->cmd1 || !pkg->cmd2)
+	{
+		errormsg("Error ->", pkg);
+	}
 	return (pkg);
 }
 
@@ -39,9 +39,9 @@ t_cmd	*init_cmd(char **args, t_data	*pkg)
 	cmd->path = find_path(args[0], pkg);
 	cmd->argv = (char **)malloc(1 * sizeof(args));
 	if (!cmd->argv)
-    {
+	{
 		errormsg("pkg->argv malloc error", pkg);
-    }
+	}
 	cmd->argv = args;
 	return (cmd);
 }
@@ -59,21 +59,22 @@ t_data	*parsing(char **args, int argc, char **envp)
 
 // Find cmd path in child process, by testing every cmd+path with 
 // exec (if error, retry with other path, if all paths tried, return error).
-char	**paths_finder(char	**env, t_data   *pkg)
+char	**paths_finder(char	**env, t_data *pkg)
 {
-	int	i;
+	int		i;
 	char	**tmp;
 	char	**tm2;
 
 	i = -1;
 	tmp = 0;
 	tm2 = 0;
+	(void) pkg;
 	while (env[++i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
-			tmp = ft_split(env[i], '=', pkg);
-			tm2 = ft_split(tmp[1], ':', pkg);
+			tmp = ft_split(env[i], '=');
+			tm2 = ft_split(tmp[1], ':');
 			free(tmp);
 			return (tm2);
 		}
