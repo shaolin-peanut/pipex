@@ -18,8 +18,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 	{
-		write(1, "Usage:\n./pipex infile \"cmd1 arg1\" \"cmd2 arg1\" outfile\"", 55);
-		write(1, "Usage:\n./pipex infile \"cmd1 arg1\" \"cmd2 arg1\" outfile\"", 55);
+		write(1, "Usage:\n./pipex infile \"cmd1 arg1\" \"cmd2 arg1\" outfile\"\n", 55);
 		exit(EXIT_FAILURE);
 	}
 	pkg = parsing(argv, argc, envp);
